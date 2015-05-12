@@ -1,0 +1,85 @@
+CLI notes
+
+http://www.commandlinefu.com/commands/view/2829/query-wikipedia-via-console-over-dns
+
+Get your external IP address
+	curl ifconfig.me
+
+
+output your microphone to a remote computer's speaker
+	dd if=/dev/dsp | ssh -c arcfour -C username@host dd of=/dev/dsp
+
+
+Update twitter via curl
+	curl -u user:pass -d status="Tweeting from the shell" http://twitter.com/statuses/update.xml
+
+
+Download an entire website
+-p parameter tells wget to include all files, including images.
+-e robots=off you don't want wget to obey by the robots.txt file
+-U mozilla as your browsers identity.
+--random-wait to let wget chose a random number of seconds to wait, avoid get into black list.
+Other Useful wget Parameters:
+--limit-rate=20k limits the rate at which it downloads files.
+-b continues wget after logging out.
+-o $HOME/wget_log.txt logs the output	
+
+	wget --random-wait -r -p -e robots=off -U mozilla http://www.example.com
+
+
+
+Jump to a directory, execute a command and jump back to current dir	
+	(cd /tmp && ls)
+
+
+SSH connection through host in the middle
+Unreachable_host is unavailable from local network, but it's available from reachable_host's network. This command creates a connection to unreachable_host through "hidden" connection to reachable_host.
+
+	ssh -t reachable_host ssh unreachable_host
+
+
+echo "You can simulate on-screen typing just like in the movies" | pv -qL 10
+
+
+Display the top ten running processes - sorted by memory usage
+ps returns all running processes which are then sorted by the 4th field in numerical order and the top 10 are sent to STDOUT.
+	
+	ps aux | sort -nk +4 | tail
+
+
+Watch Network Service Activity in Real-time	
+	lsof -i
+
+Remove duplicate entries in a file without sorting.
+	awk '!x[$0]++' <file>
+
+
+Rip audio from a video file.	
+	mplayer -ao pcm -vo null -vc dummy -dumpaudio -dumpfile <output-file> <input-file>
+
+
+
+graphical tree of sub-directories:
+	ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+
+
+http://www.commandlinefu.com/commands/view/2365/record-a-screencast-and-convert-it-to-an-mpeg#comment
+
+
+Monitor the queries being run by MySQL
+Watch is a very useful command for periodically running another command - in this using mysqladmin to display the processlist. This is useful for monitoring which queries are causing your server to clog up.
+More info here: http://codeinthehole.com/archives/2-Monitoring-MySQL-processes.html
+	watch -n 1 mysqladmin --user=<user> --password=<password> processlist
+
+GREP
+	grep apple fruitlist.txt
+
+http://www.commandlinefu.com/commands/browse/sort-by-votes/25
+
+https://technet.microsoft.com/en-us/library/bb491013.aspx
+
+http://en.wikipedia.org/wiki/Grep
+
+
+# Download *.gif from a website
+wget -e robots=off -r -l1 --no-parent -A.gif ftp://www.example.com/dir/
